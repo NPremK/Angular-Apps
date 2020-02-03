@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +10,7 @@ import { ProductModule } from './products/product.module';
 import { ListTodosComponent } from './list-todos/list-todos.component';
 import { TodoService } from './list-todos/todo.service';
 import { TodoComponent } from './todo/todo/todo.component';
+import { BasicAuthService } from './auth/basic-auth.service';
 
 
 @NgModule({
@@ -33,7 +34,10 @@ import { TodoComponent } from './todo/todo/todo.component';
     FormsModule
 
   ],
-  providers :[TodoService],
+  providers :[TodoService,
+   {
+    provide : HTTP_INTERCEPTORS, useClass : BasicAuthService,multi:true
+  }],
   
   bootstrap: [AppComponent]
 })
